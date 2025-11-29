@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>MoveMint Research Labs – Checkout & Payment</title>
+  <title>MoveMint Research Labs – Payment & Checkout</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -24,84 +24,94 @@
 
 <main>
   <section class="hero">
-    <h1 class="gradient-text">Checkout & Payment</h1>
+    <h1 class="gradient-text">Payment & Checkout</h1>
     <p>
-      Confirm your order details, then choose a payment method. Orders are
-      confirmed once payment is received and matched to your reference.
+      Use this page to submit your order details and follow the payment instructions
+      for Apple&nbsp;Pay or Zelle. QR codes and exact payment identifiers can be
+      added later as you finalize your setup.
     </p>
     <p class="hero-note">
-      All materials are for laboratory research use only. No medical or
-      diagnostic use.
+      All orders are for research materials only. No medical products or prescriptions.
     </p>
   </section>
 
   <section>
-    <h2>Order Information</h2>
-    <form id="order-form">
-      <label for="product">Selected item</label>
-      <input type="text" id="product" name="product" readonly />
+    <h2>Step 1 – Order Details</h2>
+    <div class="card">
+      <form>
+        <label for="order-item">Item(s) requested</label>
+        <input
+          type="text"
+          id="order-item"
+          name="order-item"
+          placeholder="Example: BPC-157 (x2), Semax (x1)…"
+        />
 
-      <label for="qty">Quantity</label>
-      <input type="text" id="qty" name="qty" value="1" />
+        <label for="order-name">Full name (for records)</label>
+        <input type="text" id="order-name" name="order-name" placeholder="Your name" />
 
-      <label for="name">Contact name</label>
-      <input type="text" id="name" name="name" placeholder="Research contact" />
+        <label for="order-contact">Contact email or Telegram handle</label>
+        <input
+          type="text"
+          id="order-contact"
+          name="order-contact"
+          placeholder="email@example.com or @username"
+        />
 
-      <label for="email">Contact email</label>
-      <input type="email" id="email" name="email" placeholder="lab@domain.com" />
+        <label for="order-notes">Notes for the lab (optional)</label>
+        <textarea
+          id="order-notes"
+          name="order-notes"
+          placeholder="Shipping notes, preferred pickup window, additional info…"
+        ></textarea>
 
-      <label for="notes">Notes (optional)</label>
-      <textarea id="notes" name="notes" placeholder="Shipping notes, lab PO, internal reference, etc."></textarea>
-    </form>
-
-    <p class="notice">
-      This form is front-end only. You can later connect it to email, a backend,
-      or your SlimBot to send orders automatically, but it already works for
-      basic reference (copy / screenshot).
-    </p>
+        <button type="button">Copy Details & Send to Admin</button>
+      </form>
+      <p class="notice">
+        For now this form is informational only. After filling it out, you can copy
+        the text and send via Telegram or email together with your payment.
+      </p>
+    </div>
   </section>
 
   <section>
-    <h2>Payment Methods</h2>
+    <h2>Step 2 – Select Payment Method</h2>
     <div class="method-boxes">
+
       <div class="method">
-        <div class="method-title">Apple Pay</div>
+        <div class="method-title">Apple Pay (QR Code)</div>
         <p>
-          Use your Apple Pay checkout link or QR code here when you’re ready.
-          For now this is a placeholder button that you will replace with your
-          real processor link (Stripe, Square, etc.).
+          Apple Pay payments will be accepted via a dedicated wallet. A QR code can
+          be added here once the final Apple&nbsp;Pay destination is set.
         </p>
         <p class="notice">
-          Later you can also place an Apple Pay QR image here:
-          <br />&lt;img src="applepay-qr.png" alt="Apple Pay QR" /&gt;
+          Later you can upload a file like <strong>applepay-qr.png</strong> and
+          place it here:
         </p>
-        <a class="btn" href="https://example.com/applepay-checkout" target="_blank">
-          Apple Pay Checkout (Placeholder)
-        </a>
+        <p class="notice">
+          <code>&lt;img src="applepay-qr.png" alt="Apple Pay QR" /&gt;</code>
+        </p>
       </div>
 
       <div class="method">
-        <div class="method-title">Zelle</div>
+        <div class="method-title">Zelle (QR or Phone)</div>
         <p>
-          Zelle payments can be sent using your Zelle email / phone or by
-          scanning a QR code.
+          Zelle payments can be made to your chosen phone number or email. Once you
+          finalize the Zelle account, you can create a QR code and display it here.
         </p>
         <p class="notice">
-          When you’re ready, you’ll upload a QR and reference it like:
-          <br />&lt;img src="zelle-qr.png" alt="Zelle QR" /&gt;
-        </p>
-        <p class="notice">
-          Replace this with your real details once finalized.
+          Later you can upload a file like <strong>zelle-qr.png</strong> and
+          reference it in this card.
         </p>
       </div>
-    </div>
 
-    <div class="disclaimer">
-      <strong>Important:</strong> Orders are not final until payment is
-      received and confirmed by MoveMint Research Labs. All materials are
-      non-returnable and supplied strictly for laboratory research use, not
-      for human or veterinary administration.
     </div>
+  </section>
+
+  <section class="disclaimer">
+    Payments are accepted only for research materials. By submitting an order and
+    sending payment, you confirm that you are purchasing for laboratory or
+    non-clinical research use only.
   </section>
 </main>
 
@@ -110,15 +120,6 @@
 </footer>
 
 <script>
-  function getQueryParam(key) {
-    const params = new URLSearchParams(window.location.search);
-    return params.get(key) || "";
-  }
-
-  const productField = document.getElementById("product");
-  const itemName = getQueryParam("item");
-  productField.value = itemName || "Custom / Multiple Items";
-
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 </body>
