@@ -19,7 +19,6 @@
     <a href="index.html">Items</a>
     <a href="checkout.html">Payment</a>
     <a href="research.html">Research Data</a>
-    <a href="research-ar.html">Arabic Research</a>
   </nav>
 </header>
 
@@ -27,7 +26,7 @@
   <section class="hero">
     <h1 class="gradient-text">Research-Grade Peptides & Compounds</h1>
     <p>
-      Laboratory-grade peptide and research chemistries supplied for controlled
+      Laboratory-grade peptide and research materials supplied for controlled
       experimental work. Use the order buttons below to proceed to payment
       instructions.
     </p>
@@ -38,10 +37,35 @@
 
   <section>
     <h2>Research Inventory</h2>
+    <p class="hero-note inventory-note">
+      Items are listed alphabetically. In-stock products always appear before
+      out-of-stock items.
+    </p>
+
+    <!-- Inventory manager controls -->
+    <div class="inventory-controls">
+      <input
+        type="text"
+        id="inventory-search"
+        placeholder="Search by name (e.g. BPC, Semax, Melanotan)…"
+      />
+      <select id="stock-filter">
+        <option value="all">All items (in-stock first)</option>
+        <option value="in">In stock only</option>
+        <option value="out">Out of stock only</option>
+      </select>
+    </div>
+
+    <!-- In-stock & out-of-stock sections -->
+    <h3 class="inventory-subtitle" id="in-stock-title">In Stock</h3>
     <div id="inventory-grid" class="card-grid"></div>
+
+    <h3 class="inventory-subtitle" id="out-stock-title">Out of Stock</h3>
+    <div id="oos-grid" class="card-grid"></div>
+
     <p class="notice">
       To update prices or stock later, scroll to the bottom of this file and edit the
-      <strong>inventory</strong> object in the &lt;script&gt; block (no need to touch the HTML).
+      <strong>inventory</strong> object in the &lt;script&gt; block. No HTML changes needed.
     </p>
   </section>
 
@@ -63,7 +87,7 @@
   // To change price or stock later:
   // 1) Find the item name below.
   // 2) Change "price" (number) and "stock" (number).
-  //    - price = 0  -> price is hidden on the site.
+  //    - price = 0  -> price line is hidden.
   //    - stock = 0  -> shows "Out of stock".
   //    - stock = 1-3 -> shows "Low stock".
   //    - stock >= 4 -> shows "In stock".
@@ -120,125 +144,20 @@
     "VIP": { price: 0, stock: 0 }
   };
 
-  // Optional short descriptions per item (fallback is generic if not listed)
+  // Optional one-line descriptions (fallback text is used if not defined here)
   const descriptions = {
-    "Glow 70mg": "Blend containing GHK-Cu, BPC-157, and TB-500 for tissue and recovery research models.",
-    "Klow": "Custom peptide blend for exploratory wound-healing and recovery-focused research.",
-    "Wolverin Blend 20mg": "High-intensity research blend formulated for tissue-repair model development.",
-    "NAD+": "Research-grade NAD⁺ for in-vitro mitochondrial and redox-pathway experiments.",
-    "MOTS-c": "Mitochondria-derived peptide in metabolic and insulin-sensitivity research.",
-    "Tesamorelin": "GHRH analogue used in GH-axis and body-composition research.",
-    "Ipamorelin": "Selective GHRP studied for growth hormone release in pre-clinical models.",
-    "Semax": "Neuropeptide analogue studied in neuro-modulation and cognitive research.",
-    "Selank": "Peptide researched for potential anxiolytic and neuro-modulatory effects.",
-    "Thymosin Alpha-1": "Peptide studied in immune-modulation and host-defense models.",
-    "Thymosin Beta-4": "Peptide used in pre-clinical tissue repair and angiogenesis studies.",
-    "Cerebrolysin": "Complex research preparation used in neurodegenerative and brain-injury models.",
-    "Dihexa": "Small peptide investigated for synaptogenesis and cognitive research.",
-    "LL-37": "Host-defense peptide studied in antimicrobial and immune-modulation models.",
-    "Melanotan-1": "Peptide analogue used in pigmentation and UV-response research.",
-    "Melanotan-2": "Peptide analogue used in melanocortin and metabolic research.",
-    "Retatrutide 5mg": "Incretin-pathway research peptide used in metabolic and weight-related models.",
-    "Retatrutide 1Month": "Extended-format research supply of retatrutide for ongoing metabolic studies.",
-    "Semaglutide 1Month": "GLP-1 analogue for pre-clinical metabolic and glycemic-control research.",
-    "Tirzepatide 15mg": "Dual GIP/GLP-1 analogue for metabolic and glucose-control research."
-  };
-
-  function getStockStatus(stock) {
-    if (!stock || stock <= 0) {
-      return { label: "Out of stock", cls: "out" };
-    } else if (stock > 0 && stock <= 3) {
-      return { label: "Low stock", cls: "low" };
-    } else {
-      return { label: "In stock", cls: "in" };
-    }
-  }
-
-  function createItemCard(name, data) {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    const title = document.createElement("h3");
-    title.textContent = name;
-    card.appendChild(title);
-
-    const desc = document.createElement("p");
-    desc.textContent =
-      descriptions[name] ||
-      "Research peptide / compound supplied for in-vitro and pre-clinical model development.";
-    card.appendChild(desc);
-
-    // Price: only show if > 0
-    if (data.price && data.price > 0) {
-      const priceEl = document.createElement("p");
-      priceEl.className = "price";
-      priceEl.textContent = "$" + data.price + " / vial";
-      card.appendChild(priceEl);
-    }
-
-    const stockRow = document.createElement("div");
-    stockRow.className = "stock-row";
-
-    const stockLabel = document.createElement("span");
-    stockLabel.className = "stock-label";
-    stockLabel.textContent = "Stock";
-
-    const stockInfo = getStockStatus(data.stock);
-    const stockPill = document.createElement("span");
-    stockPill.className = "stock-pill " + stockInfo.cls;
-    stockPill.textContent = stockInfo.label;
-
-    stockRow.appendChild(stockLabel);
-    stockRow.appendChild(stockPill);
-    card.appendChild(stockRow);
-
-    const btn = document.createElement("a");
-    btn.className = "btn";
-    btn.href = "checkout.html?item=" + encodeURIComponent(name);
-    btn.textContent = "Order / Pay";
-    card.appendChild(btn);
-
-    const typeBadge = document.createElement("div");
-    typeBadge.className = "badge";
-    typeBadge.textContent = "Research use only";
-    card.appendChild(typeBadge);
-
-    return card;
-  }
-
-  const grid = document.getElementById("inventory-grid");
-
-// Sort keys alphabetically
-const items = Object.keys(inventory).sort();
-
-// Separate in-stock vs out-of-stock
-const inStockItems = items.filter(name => inventory[name].stock > 0);
-const outOfStockItems = items.filter(name => inventory[name].stock <= 0);
-
-// Render in-stock items first (alphabetical)
-inStockItems.forEach(name => {
-  const card = createItemCard(name, inventory[name]);
-  grid.appendChild(card);
-});
-
-// Add a divider title if you want a visual break
-if (inStockItems.length) {
-  const divider = document.createElement("h2");
-  divider.textContent = "Out of Stock Items";
-  divider.style.marginTop = "40px";
-  divider.style.opacity = "0.6";
-  divider.style.fontSize = "1.1rem";
-  grid.appendChild(divider);
-}
-
-// Render all out-of--stock items below (alphabetical)
-outOfStockItems.forEach(name => {
-  const card = createItemCard(name, inventory[name]);
-  grid.appendChild(card);
-});
-
-
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-</body>
-</html>
+    "5-Amino-1MQ":
+      "Small-molecule NNMT inhibitor used in metabolic models involving adipose tissue and energy balance.",
+    "AOD9604":
+      "hGH 176–191 fragment analogue explored in lipolysis, metabolic and cartilage-repair research.",
+    "BPC-157":
+      "Gastric-derived peptide widely studied in muscle, tendon, ligament and gut integrity models.",
+    "B7-33":
+      "Peptide investigated for anti-fibrotic effects in cardiac, pulmonary and renal injury models.",
+    "Cerebrolysin":
+      "Neurotrophic preparation evaluated for cognition, mood and neurotrauma recovery.",
+    "FGL":
+      "Neuropeptide fragment studied for neuroprotection, synaptic plasticity and learning behaviour.",
+    "Thymosin Beta-4":
+      "Actin-modulating peptide used in tissue repair and angiogenesis research.",
+    "Retatrutide
