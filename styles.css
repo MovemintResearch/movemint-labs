@@ -173,6 +173,7 @@ p {
   font-size: 0.88rem;
 }
 
+/* Type badges */
 .badge {
   display: inline-block;
   margin-top: 10px;
@@ -217,6 +218,48 @@ button:hover,
   transform: translateY(-1px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.9);
   opacity: 0.95;
+}
+
+/* Inventory row */
+.stock-row {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #c3c8ea;
+}
+
+.stock-label {
+  opacity: 0.8;
+}
+
+.stock-pill {
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stock-pill.in {
+  border-color: rgba(46, 204, 113, 0.6);
+  background: rgba(46, 204, 113, 0.08);
+  color: #9dffbf;
+}
+
+.stock-pill.low {
+  border-color: rgba(255, 165, 0, 0.7);
+  background: rgba(255, 165, 0, 0.08);
+  color: #ffd79a;
+}
+
+.stock-pill.out {
+  border-color: rgba(255, 53, 91, 0.7);
+  background: rgba(255, 53, 91, 0.08);
+  color: #ffb1bf;
 }
 
 /* Notices & disclaimer blocks */
