@@ -1,17 +1,32 @@
+/* -------------------------
+   Global layout & typography
+-------------------------- */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+:root {
+  --mm-navy: #003a70;
+  --mm-navy-soft: #0a2540;
+  --mm-red: #d62839;
+  --mm-bg: #05070b;
+  --mm-card: #0b1020;
+  --mm-card-soft: #11182b;
+  --mm-text-main: #f7f8fc;
+  --mm-text-soft: #b9bed6;
+  --mm-border-soft: rgba(255, 255, 255, 0.08);
+}
+
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #101428 0, #050509 45%, #010103 100%);
-  color: #f5f7ff;
+  background: radial-gradient(circle at top, #121a2f 0, var(--mm-bg) 48%, #02030a 100%);
+  color: var(--mm-text-main);
   line-height: 1.6;
 }
 
-/* Links */
+/* Basic links */
 a {
   color: inherit;
   text-decoration: none;
@@ -20,20 +35,23 @@ a:hover {
   text-decoration: none;
 }
 
-/* Header / Brand */
+/* -------------------------
+   Header & navigation
+-------------------------- */
 .site-header {
   padding: 14px 6%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--mm-border-soft);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  backdrop-filter: blur(12px);
   background: linear-gradient(
     to right,
-    rgba(0, 0, 0, 0.92),
-    rgba(10, 12, 26, 0.9)
+    #020309f2,
+    #020309f2,
+    rgba(0, 58, 112, 0.9)
   );
+  backdrop-filter: blur(16px);
 }
 
 .brand {
@@ -43,10 +61,10 @@ a:hover {
 }
 
 .brand-logo {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   object-fit: contain;
-  filter: drop-shadow(0 0 6px rgba(30, 143, 255, 0.35));
+  filter: drop-shadow(0 0 8px rgba(0, 58, 112, 0.5));
 }
 
 .brand-text {
@@ -56,62 +74,67 @@ a:hover {
 
 .brand-name {
   font-weight: 700;
-  letter-spacing: 0.08em;
-  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  font-size: 0.98rem;
   text-transform: uppercase;
 }
 
 .brand-name span {
-  color: #1e8fff;
+  color: var(--mm-navy);
 }
 
 .brand-tagline {
-  font-size: 0.7rem;
-  color: #a0a6c4;
+  font-size: 0.72rem;
+  color: var(--mm-text-soft);
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 0.8rem;
+  gap: 10px;
+  font-size: 0.78rem;
   text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .nav-links a {
-  padding: 6px 12px;
+  padding: 6px 13px;
   border-radius: 999px;
   border: 1px solid transparent;
-  color: #d5dbff;
-  letter-spacing: 0.08em;
+  color: #dde2ff;
 }
 
 .nav-links a:hover {
-  border-color: rgba(255, 255, 255, 0.22);
-  background: radial-gradient(circle at top left, #1e8fff1a, #ff33551a);
+  border-color: rgba(214, 40, 57, 0.8);
+  background: radial-gradient(circle at top left, rgba(0, 58, 112, 0.22), rgba(214, 40, 57, 0.2));
 }
 
-/* Layout */
+/* -------------------------
+   Main layout & headings
+-------------------------- */
 main {
-  max-width: 1100px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 32px 6% 60px;
 }
 
-/* Typography */
 h1 {
-  font-size: 2rem;
-  margin-bottom: 8px;
+  font-size: 2.1rem;
+  margin-bottom: 10px;
 }
 
 h2 {
-  font-size: 1.35rem;
-  margin-top: 32px;
-  margin-bottom: 8px;
+  font-size: 1.4rem;
+  margin-top: 34px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 1.02rem;
 }
 
 p {
-  color: #d5daf5;
+  color: var(--mm-text-soft);
   font-size: 0.95rem;
 }
 
@@ -120,251 +143,4 @@ p {
 }
 
 .gradient-text {
-  background: linear-gradient(120deg, #ff355b, #1e8fff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.hero-note {
-  font-size: 0.8rem;
-  color: #9aa0c1;
-}
-
-/* Cards & grids */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
-  margin-top: 20px;
-}
-
-.card {
-  position: relative;
-  background: radial-gradient(circle at top left, #1e2237, #0b0d17 55%, #050509 100%);
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 16px;
-  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.6);
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 1px solid transparent;
-  background: linear-gradient(135deg, #ff355b33, #1e8fff33);
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-  pointer-events: none;
-}
-
-.card:hover::before {
-  opacity: 1;
-}
-
-.card h3 {
-  margin-bottom: 6px;
-  font-size: 1.02rem;
-}
-
-.card p {
-  font-size: 0.88rem;
-}
-
-/* Type badges */
-.badge {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 4px 11px;
-  font-size: 0.72rem;
-  border-radius: 999px;
-  border: 1px solid rgba(158, 173, 255, 0.5);
-  color: #b6c0ff;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-}
-
-/* Price & buttons */
-.price {
-  margin-top: 8px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-button,
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: none;
-  background: linear-gradient(135deg, #ff355b, #1e8fff);
-  color: #050509;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
-  transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, opacity 0.12s;
-}
-
-button:hover,
-.btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.9);
-  opacity: 0.95;
-}
-
-/* Inventory row */
-.stock-row {
-  margin-top: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 0.78rem;
-  color: #c3c8ea;
-}
-
-.stock-label {
-  opacity: 0.8;
-}
-
-.stock-pill {
-  padding: 3px 9px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.stock-pill.in {
-  border-color: rgba(46, 204, 113, 0.6);
-  background: rgba(46, 204, 113, 0.08);
-  color: #9dffbf;
-}
-
-.stock-pill.low {
-  border-color: rgba(255, 165, 0, 0.7);
-  background: rgba(255, 165, 0, 0.08);
-  color: #ffd79a;
-}
-
-.stock-pill.out {
-  border-color: rgba(255, 53, 91, 0.7);
-  background: rgba(255, 53, 91, 0.08);
-  color: #ffb1bf;
-}
-
-/* Notices & disclaimer blocks */
-.notice {
-  margin-top: 10px;
-  font-size: 0.8rem;
-  color: #9aa0c1;
-}
-
-.disclaimer {
-  margin-top: 28px;
-  padding: 14px 16px;
-  font-size: 0.8rem;
-  color: #c3c8ea;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: radial-gradient(circle at top, #1a1024dd, #050509ee);
-}
-
-/* Forms */
-form {
-  margin-top: 16px;
-}
-
-label {
-  display: block;
-  font-size: 0.78rem;
-  margin-bottom: 4px;
-  color: #c3c8ea;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-}
-
-input[type="text"],
-input[type="email"],
-textarea,
-select {
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background: rgba(5, 8, 20, 0.95);
-  color: #f5f7ff;
-  margin-bottom: 12px;
-  font-size: 0.88rem;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: #1e8fff;
-  box-shadow: 0 0 0 1px rgba(30, 143, 255, 0.4);
-}
-
-textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-/* Payment method boxes */
-.method-boxes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 18px;
-  margin-top: 12px;
-}
-
-.method {
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 14px;
-  background: radial-gradient(circle at top right, #1c1027, #060710 55%, #020208 100%);
-}
-
-.method-title {
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #ffffff;
-}
-
-/* Footer */
-footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 14px 6%;
-  font-size: 0.75rem;
-  color: #8b91b6;
-  text-align: center;
-  margin-top: 40px;
-}
-
-/* Responsive tweaks */
-@media (max-width: 720px) {
-  .site-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav-links {
-    width: 100%;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-
-  h1 {
-    font-size: 1.6rem;
-  }
-}
+  background: linear-gradient(120deg,
