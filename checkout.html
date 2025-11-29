@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MoveMint Research Labs – Checkout & Payment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header>
+  <div class="logo">MoveMint <span>Research Labs</span></div>
+  <nav class="nav-links">
+    <a href="index.html">Items</a>
+    <a href="checkout.html">Payment</a>
+    <a href="research.html">Research Data</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Checkout & Payment</h1>
+    <p>
+      Complete the order details below, then choose your preferred payment
+      method. Orders are confirmed after payment is received.
+    </p>
+    <p class="hero-note">
+      All materials are for laboratory research use only. No medical use.
+    </p>
+  </section>
+
+  <section>
+    <h2>Order Info</h2>
+    <form id="order-form">
+      <label for="product">Selected item</label>
+      <input type="text" id="product" name="product" readonly />
+
+      <label for="qty">Quantity</label>
+      <input type="text" id="qty" name="qty" value="1" />
+
+      <label for="name">Contact name</label>
+      <input type="text" id="name" name="name" placeholder="Research contact" />
+
+      <label for="email">Contact email</label>
+      <input type="email" id="email" name="email" placeholder="lab@domain.com" />
+
+      <label for="notes">Notes (optional)</label>
+      <textarea id="notes" name="notes" placeholder="Shipping notes, lab PO, etc."></textarea>
+    </form>
+
+    <p class="notice">
+      This form is front-end only. For full automation you can connect it to
+      your email, Telegram bot, or backend later. For now, you can have users
+      submit by screenshot or by copying details into your chat.
+    </p>
+  </section>
+
+  <section>
+    <h2>Payment Methods</h2>
+    <div class="method-boxes">
+      <div class="method">
+        <div class="method-title">Apple Pay</div>
+        <p>
+          Use this option if you have an Apple Pay payment link from your
+          processor (Stripe, Square, etc.).
+        </p>
+        <p class="notice">
+          Replace the link below with your real payment link:
+        </p>
+        <a class="btn" href="https://example.com/applepay-checkout" target="_blank">
+          Pay with Apple Pay
+        </a>
+        <p class="notice">
+          Instruct buyers to include their <strong>name</strong> and
+          <strong>item</strong> in the payment notes.
+        </p>
+      </div>
+
+      <div class="method">
+        <div class="method-title">Zelle</div>
+        <p>
+          Send Zelle payment to:
+        </p>
+        <p>
+          <strong>Email:</strong> yourzelleemail@example.com<br />
+          <strong>Phone:</strong> (555) 555-5555
+        </p>
+        <p class="notice">
+          Replace email and phone with your actual Zelle details. You can also
+          add a Zelle QR image here later.
+        </p>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Important:</strong> Orders are not final until payment is received
+      and confirmed by MoveMint Research Labs. All materials are non-returnable
+      and are for research use only, not for human or animal use.
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; <span id="year"></span> MoveMint Research Labs. For research use only.
+</footer>
+
+<script>
+  // Pre-fill "Selected item" from ?item= query parameter
+  function getQueryParam(key) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(key) || "";
+  }
+  const productField = document.getElementById("product");
+  const itemName = getQueryParam("item");
+  productField.value = itemName || "Custom / Multiple Items";
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
