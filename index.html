@@ -160,4 +160,227 @@
       "Neuropeptide fragment studied for neuroprotection, synaptic plasticity and learning behaviour.",
     "Thymosin Beta-4":
       "Actin-modulating peptide used in tissue repair and angiogenesis research.",
-    "Retatrutide
+    "Retatrutide 5mg":
+      "Tri-agonist targeting GLP-1, GIP and glucagon receptors in metabolic research.",
+    "Retatrutide 1Month":
+      "Extended-format retatrutide supply for ongoing incretin-pathway research.",
+    "FOXO4-DRI":
+      "Peptide examined for senescent-cell targeting and aging-related signalling pathways.",
+    "Follistatin-315":
+      "Myostatin/activin-binding protein researched for skeletal muscle and reproductive biology.",
+    "NAD+":
+      "Redox cofactor used in mitochondrial and longevity-focused experiments.",
+    "Hexarelin":
+      "GHRP analogue studied in cardiac-ischemia, muscle preservation and lipid-profile models.",
+    "GHRP-2":
+      "Growth-hormone secretagogue evaluated for GH release, muscle and sleep-architecture effects.",
+    "PEG-MGF":
+      "Pegylated mechano growth factor variant used in tissue repair and lipid-metabolism studies.",
+    "Tesofensine":
+      "SNDRI compound studied in neurodegenerative and weight-management research.",
+    "Thymosin Alpha-1":
+      "Thymic peptide investigated for immune modulation and host-defense support.",
+    "GHK-Cu":
+      "Copper peptide used in skin, wound-healing and collagen-modulation research.",
+    "Epithalon":
+      "Epithalamin-derived peptide explored in telomere and circadian-rhythm models.",
+    "Semaglutide 1Month":
+      "GLP-1 analogue used in glycemic-control and appetite-regulation research.",
+    "Tirzepatide 15mg":
+      "Dual GIP/GLP-1 analogue for metabolic and body-composition models.",
+    "Selank":
+      "Tuftsin-based peptide examined for anxiolytic and cognitive effects.",
+    "Semax":
+      "ACTH-derived peptide studied in BDNF, neuroprotection and cognitive research.",
+    "Vilon":
+      "Immunomodulatory peptide with interest in tissue repair and aging biology.",
+    "Humanin":
+      "Mitochondrial micro-peptide researched for cell-protective and longevity-related roles.",
+    "MOTS-c":
+      "Mitochondria-derived peptide evaluated for insulin sensitivity, exercise and metabolic control.",
+    "CJC-1295":
+      "Long-acting GHRH analogue used in GH/IGF-1 axis research.",
+    "Ipamorelin":
+      "Selective GHRP ghrelin agonist used to probe GH and IGF-1 signalling.",
+    "Tesamorelin":
+      "GHRH analogue researched in lipodystrophy, cognition and fat-distribution models.",
+    "Sermorelin":
+      "GHRH analogue historically used to assess GH secretory capacity in research.",
+    "Kisspeptin-10":
+      "Peptide studied for LH stimulation and reproductive hormone regulation.",
+    "Dihexa":
+      "Nootropic peptide investigated for synaptogenesis and cognitive support.",
+    "ARA-290":
+      "Innate-repair receptor ligand evaluated in inflammation, neuropathic pain and wound repair.",
+    "Oxytocin":
+      "Neuropeptide researched for social behaviour, wound healing and cardiovascular markers.",
+    "DSIP":
+      "Delta sleep–inducing peptide explored in sleep, endocrine and mood models.",
+    "KPV":
+      "Anti-inflammatory tripeptide investigated in IBD and wound-healing models.",
+    "LL-37":
+      "Host-defense peptide with antimicrobial and angiogenic research interest.",
+    "Melanotan-1":
+      "Melanocortin analogue used in pigmentation, cardiovascular and metabolic studies.",
+    "Melanotan-2":
+      "Alpha-MSH analogue evaluated for pigmentation, appetite and sexual-function research.",
+    "PE-22-28":
+      "Spadin-derived peptide targeting TREK-1 channels in antidepressant and neuroprotection models.",
+    "P21":
+      "Peptide studied for BDNF-linked neurogenesis and Alzheimer-pathology models.",
+    "PNC-27":
+      "Peptide investigated for selective tumour-cell targeting via HDM-2/p53 interactions.",
+    "PT-141":
+      "Melanocortin agonist used in sexual function and haemodynamic research.",
+    "SS31":
+      "Mitochondria-targeted peptide evaluated for ATP production and inflammatory signalling.",
+    "Thymalin":
+      "Thymic peptide researched for immune modulation, inflammation and longevity.",
+    "Glow 70mg":
+      "GHK-Cu, BPC-157 and TB-500 blend used in tissue and recovery research models.",
+    "Klow":
+      "Custom recovery-focused peptide blend for exploratory tissue-repair research.",
+    "Wolverin Blend 20mg":
+      "High-intensity tissue-support blend for extended repair-model work.",
+    "VIP":
+      "Vasoactive intestinal peptide investigated in inflammation, fibrosis and CNS protection."
+  };
+
+  function getStockStatus(stock) {
+    if (!stock || stock <= 0) {
+      return { label: "Out of stock", cls: "out" };
+    } else if (stock > 0 && stock <= 3) {
+      return { label: "Low stock", cls: "low" };
+    } else {
+      return { label: "In stock", cls: "in" };
+    }
+  }
+
+  function createItemCard(name, data) {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const title = document.createElement("h3");
+    title.textContent = name;
+    card.appendChild(title);
+
+    const desc = document.createElement("p");
+    desc.textContent =
+      descriptions[name] ||
+      "Research peptide / compound supplied for in-vitro and pre-clinical model development.";
+    card.appendChild(desc);
+
+    // Price: only show if > 0
+    if (data.price && data.price > 0) {
+      const priceEl = document.createElement("p");
+      priceEl.className = "price";
+      priceEl.textContent = "$" + data.price + " / vial";
+      card.appendChild(priceEl);
+    }
+
+    const stockRow = document.createElement("div");
+    stockRow.className = "stock-row";
+
+    const stockLabel = document.createElement("span");
+    stockLabel.className = "stock-label";
+    stockLabel.textContent = "Stock";
+
+    const stockInfo = getStockStatus(data.stock);
+    const stockPill = document.createElement("span");
+    stockPill.className = "stock-pill " + stockInfo.cls;
+    stockPill.textContent = stockInfo.label;
+
+    stockRow.appendChild(stockLabel);
+    stockRow.appendChild(stockPill);
+    card.appendChild(stockRow);
+
+    const btn = document.createElement("a");
+    btn.className = "btn";
+    btn.href = "checkout.html?item=" + encodeURIComponent(name);
+    btn.textContent = "Order / Pay";
+    card.appendChild(btn);
+
+    const typeBadge = document.createElement("div");
+    typeBadge.className = "badge";
+    typeBadge.textContent = "Research use only";
+    card.appendChild(typeBadge);
+
+    return card;
+  }
+
+  const inventoryGrid = document.getElementById("inventory-grid");
+  const oosGrid = document.getElementById("oos-grid");
+  const inTitle = document.getElementById("in-stock-title");
+  const outTitle = document.getElementById("out-stock-title");
+  const searchInput = document.getElementById("inventory-search");
+  const filterSelect = document.getElementById("stock-filter");
+
+  const sortedNames = Object.keys(inventory).sort((a, b) =>
+    a.toLowerCase().localeCompare(b.toLowerCase())
+  );
+
+  function renderInventory() {
+    const search = searchInput.value.trim().toLowerCase();
+    const mode = filterSelect.value; // 'all' | 'in' | 'out'
+
+    inventoryGrid.innerHTML = "";
+    oosGrid.innerHTML = "";
+
+    const inNames = [];
+    const outNames = [];
+
+    for (const name of sortedNames) {
+      const data = inventory[name];
+      if (search && !name.toLowerCase().includes(search)) continue;
+      if (data.stock > 0) {
+        inNames.push(name);
+      } else {
+        outNames.push(name);
+      }
+    }
+
+    // In-stock section
+    if (mode === "all" || mode === "in") {
+      if (inNames.length) {
+        inTitle.style.display = "";
+        inventoryGrid.style.display = "grid";
+        inNames.forEach((name) => {
+          const card = createItemCard(name, inventory[name]);
+          inventoryGrid.appendChild(card);
+        });
+      } else {
+        inTitle.style.display = "none";
+        inventoryGrid.style.display = "none";
+      }
+    } else {
+      inTitle.style.display = "none";
+      inventoryGrid.style.display = "none";
+    }
+
+    // Out-of-stock section
+    if (mode === "all" || mode === "out") {
+      if (outNames.length) {
+        outTitle.style.display = "";
+        oosGrid.style.display = "grid";
+        outNames.forEach((name) => {
+          const card = createItemCard(name, inventory[name]);
+          oosGrid.appendChild(card);
+        });
+      } else {
+        outTitle.style.display = "none";
+        oosGrid.style.display = "none";
+      }
+    } else {
+      outTitle.style.display = "none";
+      oosGrid.style.display = "none";
+    }
+  }
+
+  searchInput.addEventListener("input", renderInventory);
+  filterSelect.addEventListener("change", renderInventory);
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+  renderInventory();
+</script>
+</body>
+</html>
