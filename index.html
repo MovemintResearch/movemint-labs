@@ -207,11 +207,36 @@
   }
 
   const grid = document.getElementById("inventory-grid");
-  Object.keys(inventory).forEach((name) => {
-    const data = inventory[name];
-    const card = createItemCard(name, data);
-    grid.appendChild(card);
-  });
+
+// Sort keys alphabetically
+const items = Object.keys(inventory).sort();
+
+// Separate in-stock vs out-of-stock
+const inStockItems = items.filter(name => inventory[name].stock > 0);
+const outOfStockItems = items.filter(name => inventory[name].stock <= 0);
+
+// Render in-stock items first (alphabetical)
+inStockItems.forEach(name => {
+  const card = createItemCard(name, inventory[name]);
+  grid.appendChild(card);
+});
+
+// Add a divider title if you want a visual break
+if (inStockItems.length) {
+  const divider = document.createElement("h2");
+  divider.textContent = "Out of Stock Items";
+  divider.style.marginTop = "40px";
+  divider.style.opacity = "0.6";
+  divider.style.fontSize = "1.1rem";
+  grid.appendChild(divider);
+}
+
+// Render all out-of--stock items below (alphabetical)
+outOfStockItems.forEach(name => {
+  const card = createItemCard(name, inventory[name]);
+  grid.appendChild(card);
+});
+
 
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
